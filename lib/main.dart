@@ -35,14 +35,14 @@ class HomePage extends StatelessWidget {
                       color: const Color(0xFF31191b),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    height: MediaQuery.of(context).size.height / 6,
+                    
+                    
                     width: MediaQuery.of(context).size.width / 2.3,
 
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                               padding: const EdgeInsets.only(left: 15, top: 15),
+                        Padding(padding: const EdgeInsets.only(left: 15, top: 15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -191,7 +191,6 @@ class HomePage extends StatelessWidget {
                     ),
                     height: MediaQuery.of(context).size.height / 6,
                     width: MediaQuery.of(context).size.width / 2.3,
-
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -406,7 +405,7 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: MediaQuery.of(context).size.width % 25),
+                  SizedBox(width: MediaQuery.of(context).size.width %  25),
                   Container(
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(198, 201, 69, 69),
@@ -622,6 +621,96 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class SocialCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String iconPath;
+  final Color color;
+  final bool isChecked;
+  final ValueChanged<bool?> onChanged;
+
+  const SocialCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.iconPath,
+    required this.color,
+    required this.isChecked,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double cardWidth = constraints.maxWidth;
+        double cardHeight = constraints.maxHeight;
+
+        return Container(
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Левая часть: иконка + текст
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      iconPath,
+                      width: cardWidth * 0.25, // иконка = 25% ширины карточки
+                    ),
+                    SizedBox(height: cardHeight * 0.2),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: cardWidth * 0.12, // текст адаптируется
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: cardWidth * 0.1,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+                // Правая часть: чекбокс
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Checkbox(
+                    value: isChecked,
+                    onChanged: onChanged,
+                    activeColor: Colors.white,
+                    checkColor: Colors.black,
+                    side: const BorderSide(color: Colors.white),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
